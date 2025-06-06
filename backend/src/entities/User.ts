@@ -8,6 +8,9 @@ export class User {
     @Column()
     name!: string;
 
+    @Column()
+    cpf!: string;
+
     @Column({ unique: true })
     email!: string;
 
@@ -15,7 +18,13 @@ export class User {
     password!: string;
 
     @Column({ nullable: true })
+    phone!: string;
+
+    @Column({ nullable: true })
     refreshToken!: string;
+
+    @Column({ default: false })
+    isDeleted!: boolean;
 
     @CreateDateColumn()
     created_at!: Date;

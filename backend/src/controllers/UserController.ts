@@ -1,35 +1,23 @@
-const { validationResult } = require('express-validator');
-const UserService = require('../services/UserService');
+import { Request, Response } from 'express';
+import UserService from '../services/UserService';
 
 class UserController {
-  async register(req, res, next) {
+  //** Cria um novo usuário
+  public async createUser(req: Request, res: Response): Promise<Response> {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-      }
-
-      const { user, token } = await UserService.createUser(req.body);
-      res.status(201).json({ user, token });
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async login(req, res, next) {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-      }
-
-      const { email, password } = req.body;
-      const { user, token } = await UserService.login(email, password);
-      res.json({ user, token });
-    } catch (error) {
-      next(error);
+      UserService.validateCreateUser(req);
+      const user = await UserService.create(req.body);
+      return res.status(201).json({
+        message: 'Usuário criado com sucesso',
+        user
+      });
+    } catch (err: any) {
+      return res.status(400).json({
+        message: 'Erro ao criar usuário',
+        error: err.message
+      });
     }
   }
 }
 
-module.exports = new UserController(); 
+export default new UserController();

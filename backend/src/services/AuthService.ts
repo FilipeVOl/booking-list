@@ -3,7 +3,7 @@ import { AppDataSource } from '../config/data-source';
 import { User } from '../entities/User';
 import { Request } from 'express';
 import bcrypt from 'bcryptjs';
-import { LoginDTO } from 'src/dto/Auth';
+import { LoginDTO } from '../dto/Auth';
 
 class AuthService {
     // Repositorio de usuarios
@@ -56,6 +56,20 @@ class AuthService {
         const refreshToken = sign({ email }, process.env.REFRESH_TOKEN_SECRET || 'default-refresh-secret', { expiresIn: '15d' });
         return refreshToken;
     };
+
+//** - Retorna os dados do perfil do usuário atual */
+public static async getProfile(email: string): Promise<Partial<User>> {
+    const user = await this.userRepository.findOne({
+        where: { email },
+    });
+    
+    if (!user) {
+        throw new Error('User not found');
+    }
+    
+    const { password, refreshToken, ...userData } = user;
+    return userData;
+}    
 
 }
 
