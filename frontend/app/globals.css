@@ -24,6 +24,22 @@ h1 {
   @apply text-5xl font-bold leading-50;
 }
 
+.colored-buttonPurple {
+  @apply bg-white border border-gray-200 rounded-lg px-3 py-4 shadow-sm focus-within:shadow-md focus-within:shadow-secondary/80 focus-within:border-secondary focus-within:border;
+}
+
+.colored-buttonPurple:focus-within .search-icon {
+  @apply text-secondary;
+}
+
+.colored-buttonGreen {
+  @apply bg-white border border-gray-200 rounded-lg px-3 py-4 shadow-sm focus-within:shadow-md focus-within:shadow-tertiary/80 focus-within:border-tertiary focus-within:border;
+}
+
+.colored-buttonGreen:focus-within .search-icon {
+  @apply text-tertiary;
+}
+
 @layer base {
   * {
     @apply p-0;

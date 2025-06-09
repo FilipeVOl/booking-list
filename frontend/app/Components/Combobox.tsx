@@ -54,10 +54,10 @@ export function ComboBoxResponsive({ selectedStatus, setSelectedStatus, imageLab
     return (
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <div className="flex items-center justify-start w-[150px] bg-white border border-gray-200 rounded-lg px-3 py-4 shadow-sm cursor-pointer">
+          <div className="flex items-center justify-start w-[150px] colored-buttonGreen">
           <SlidersHorizontal className="w-5 h-5 text-tertiary" /> 
             <button
-              className="ml-3  outline-none text-gray-700 placeholder:text-gray-400 cursor-pointer"
+              className="ml-3  outline-none text-gray-400 cursor-pointer"
             >
               {selectedStatus?.label || ''}
             </button>

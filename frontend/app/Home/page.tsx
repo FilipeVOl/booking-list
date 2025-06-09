@@ -13,12 +13,12 @@ const HomePage = () => {
                 <h1 className="text-2xl font-bold">Rooming List Management: Events</h1>
                 <div className="flex flex-row items-center gap-4 mt-6">
                     {/* Input de busca */}
-                    <div className="flex items-center w-[300px] bg-white border border-gray-200 rounded-lg px-3 py-4 shadow-sm cursor-pointer">
-                        <Search className="w-5 h-5 text-gray-400" />
+                    <div className="flex items-center w-[300px] colored-buttonPurple">
+                        <Search className="w-5 h-5 text-gray-400 search-icon" />
                         <input
                             type="text"
                             placeholder="Search"
-                            className="ml-2 flex-1 bg-transparent outline-none text-gray-700 placeholder:text-gray-400 cursor-pointer"
+                            className="ml-2 flex-1 bg-transparent outline-none text-gray-700 placeholder:text-gray-400"
                             />
                     </div>
                     {/* Botão de filtro usando ComboBoxResponsive */}
