@@ -26,7 +26,7 @@ import { SlidersHorizontal } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
 
 
-type Status = {
+export type Status = {
   value: string
   label: string
 }
@@ -101,6 +101,7 @@ function StatusList({
         <CommandGroup>
           {statuses.map((status) => {
             const checkboxId = `checkbox-${status.value}`;
+            console.log(checkboxId)
             return (
               <label
                 key={status.value}
@@ -110,8 +111,11 @@ function StatusList({
                 <Checkbox
                   id={checkboxId}
                   className="!w-8 !h-8"
-                  // checked={...} // controle se quiser
-                  // onCheckedChange={...}
+                  // checked={checkboxId} 
+                  onCheckedChange={(checked) => {
+                    setSelectedStatus(status);
+                    console.log(`Checkbox ${status.value} was ${checked ? 'checked' : 'unchecked'}`);
+                  }}
                 />
                 <CommandItem
                   key={status.value}
