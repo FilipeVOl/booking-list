@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../config/data-source";
 import { RoomingList } from "../entities/RoomingList";
+import { Like } from "typeorm";
 
 class RoomingListController {
     private roomingListRepository = AppDataSource.getRepository(RoomingList);
@@ -22,60 +23,49 @@ class RoomingListController {
         try {
             console.log('Full request body:', req.body);
             
-            const searchValue = req.body?.searchValue || '';
+            const searchValue = (req.query?.searchValue as string) || '';
             console.log('Search value:', searchValue);
             
             // Lista de valores válidos para agreement_type
             const validAgreementTypes = ['leisure', 'staff', 'artist'];
             
-            if (searchValue) {
-                // Tenta encontrar o valor em diferentes campos
-                const whereConditions: Partial<RoomingList>[] = [
-                    { rfp_name: searchValue }
-                ];
+            let whereConditions: any = [];
 
-                // Só adiciona a condição de agreement_type se o valor for um tipo válido
+            if (searchValue) {
+                // Busca parcial para rfp_name
+                whereConditions.push({ rfp_name: Like(`%${searchValue}%`) });
+
+                // Busca exata para agreement_type se for um tipo válido
                 if (validAgreementTypes.includes(searchValue)) {
                     whereConditions.push({ agreement_type: searchValue });
                 }
-
-                const roomingLists = await this.roomingListRepository.find({
-                    where: whereConditions,
-                    order: { id: "DESC" },
-                    relations: ["roomingBookings", "roomingBookings.booking"]
-                });
-                
-                console.log('Found rooming lists:', roomingLists.length);
-                
-                // Se não encontrou nenhum resultado com os filtros, retorna todos
-                if (roomingLists.length === 0) {
-                    console.log('No matches found, returning all records');
-                    const allRoomingLists = await this.roomingListRepository.find({
-                        order: { id: "DESC" },
-                        relations: ["roomingBookings", "roomingBookings.booking"]
-                    });
-                    
-                    return res.status(200).json({
-                        message: "No matches found for the search, showing all records",
-                        roomingLists: allRoomingLists
-                    });
-                }
-                
-                return res.status(200).json({
-                    message: "Rooming lists fetched successfully",
-                    roomingLists
-                });
             }
 
-            // Se não houver valor de busca, retorna todos
-            const allRoomingLists = await this.roomingListRepository.find({
+            const roomingLists = await this.roomingListRepository.find({
+                where: whereConditions.length > 0 ? whereConditions : undefined,
                 order: { id: "DESC" },
                 relations: ["roomingBookings", "roomingBookings.booking"]
             });
             
+            console.log('Found rooming lists:', roomingLists.length);
+            
+            // Se não encontrou nenhum resultado com os filtros, retorna todos
+            if (roomingLists.length === 0) {
+                console.log('No matches found, returning all records');
+                const allRoomingLists = await this.roomingListRepository.find({
+                    order: { id: "DESC" },
+                    relations: ["roomingBookings", "roomingBookings.booking"]
+                });
+                
+                return res.status(200).json({
+                    message: "No matches found for the search, showing all records",
+                    roomingLists: allRoomingLists
+                });
+            }
+            
             return res.status(200).json({
                 message: "Rooming lists fetched successfully",
-                roomingLists: allRoomingLists
+                roomingLists
             });
         } catch (error: any) {
             console.error('Error in getAll:', error);

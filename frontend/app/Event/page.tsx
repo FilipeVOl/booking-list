@@ -3,6 +3,15 @@ import EventCard from "./EventCard";
 import roomingLists from "../../../backend/json/rooming-lists.json"
 import { filterRoomingListsByEvent } from "../types/RoomingList";
 
+// const roomingLists = await (async () => {
+//   const response = await fetch("http://localhost:3001/api/rooming-lists", {
+//     method: "GET",
+//   });
+//   const data = await response.json();
+//   console.log(data);
+//   return data;
+// })();
+
 const ultraRoomingLists = filterRoomingListsByEvent(roomingLists, "Ultra");
 const rollingRoomingLists = filterRoomingListsByEvent(roomingLists, "Rolling");
 

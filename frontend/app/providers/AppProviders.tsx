@@ -1,6 +1,7 @@
 "use client"
 
 import { FilterProvider } from "@/context/filterContext"
+import { AuthProvider } from "@/context/authContext"
 
 interface AppProvidersProps {
   children: React.ReactNode
@@ -8,8 +9,10 @@ interface AppProvidersProps {
 
 export function AppProviders({ children }: AppProvidersProps) {
   return (
-    <FilterProvider>
-      {children}
-    </FilterProvider>
+    <AuthProvider>
+      <FilterProvider>
+        {children}
+      </FilterProvider>
+    </AuthProvider>
   )
 }
