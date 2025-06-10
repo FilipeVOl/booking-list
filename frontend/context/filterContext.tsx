@@ -2,32 +2,42 @@ import { createContext, ReactNode, useState } from "react";
 import { Status } from "@/app/Components/Combobox";
 
 interface FilterContextType {
-  filter: Status;
-  setFilter: (filter: Status) => void;
+  statuses: Status[];
+  setStatuses: (statuses: Status[]) => void;
 }
 
-const initialFilterState: Status = {
-  value: "",
-  label: "",
-};
+const initialStatuses: Status[] = [
+  {
+    value: "active",
+    label: "Active",
+    checked: false
+  },
+  {
+    value: "closed",
+    label: "Closed",
+    checked: false
+  },
+  {
+    value: "cancelled",
+    label: "Cancelled",
+    checked: false
+  },
+];
 
 export const FilterContext = createContext<FilterContextType>({
-  filter: initialFilterState,
-  setFilter: () => {},
+  statuses: initialStatuses,
+  setStatuses: () => {},
 });
-
 
 interface FilterProviderProps {
   children: ReactNode;
 }
 
 export function FilterProvider({ children }: FilterProviderProps) {
-  const [filter, setFilter] = useState<Status>(initialFilterState);
-console.log(filter)
-
+  const [statuses, setStatuses] = useState<Status[]>(initialStatuses);
 
   return (
-    <FilterContext.Provider value={{ filter, setFilter }}>
+    <FilterContext.Provider value={{ statuses, setStatuses }}>
       {children}
     </FilterContext.Provider>
   );

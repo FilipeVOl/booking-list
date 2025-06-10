@@ -1,12 +1,27 @@
 "use client"
 import { ComboBoxResponsive } from "../Components/Combobox";
-import React from "react";
+import React, { useEffect } from "react";
 import { Search } from "lucide-react";
 
 
 const HomePage = () => {
-    // Estado para o filtro do ComboBoxResponsive
     const [selectedFilter, setSelectedFilter] = React.useState("");
+    const [searchInput, setSearchInput] = React.useState("");
+    
+    useEffect(() => {
+        setTimeout(() => {
+        const fetchData = async () => {
+            const response = await fetch("http://localhost:3001/api/rooming-lists", {
+                method: "GET",
+                body: JSON.stringify({ searchValue: searchInput }),
+            })
+            const data = await response.json()
+            console.log(data)
+            }
+            fetchData()
+        }, 1000)
+    }, [searchInput])
+
     return (
         <div className="container mx-auto">
             <div className="flex flex-col items-start justify-start">
@@ -19,12 +34,12 @@ const HomePage = () => {
                             type="text"
                             placeholder="Search"
                             className="ml-2 flex-1 bg-transparent outline-none text-gray-700 placeholder:text-gray-400"
+                            value={searchInput}
+                            onChange={(e) => setSearchInput(e.target.value)}
                             />
                     </div>
-                    {/* Botão de filtro usando ComboBoxResponsive */}
                     <ComboBoxResponsive
-                        selectedStatus={{value: "filters", label: "Filters"}}
-                        setSelectedStatus={() => {}}
+                        label="Filters"
                         imageLabel={false}
                     />
                 </div>

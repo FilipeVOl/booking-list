@@ -1,7 +1,6 @@
 "use client"
 
 import * as React from "react"
-
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { Button } from "@/components/ui/button"
 import {
@@ -24,47 +23,34 @@ import {
 } from "@/components/ui/popover"
 import { SlidersHorizontal } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
-
+import { FilterContext } from "@/context/filterContext"
 
 export type Status = {
   value: string
   label: string
+  checked: boolean
 }
 
-const statuses: Status[] = [
-  {
-    value: "active",
-    label: "Active",
-  },
-  {
-    value: "closed",
-    label: "Closed",
-  },
-  {
-    value: "cancelled",
-    label: "Cancelled",
-  },
-]
-
-export function ComboBoxResponsive({ selectedStatus, setSelectedStatus, imageLabel }: { selectedStatus: Status | null, setSelectedStatus: (status: Status | null) => void, imageLabel: boolean }) {
+export function ComboBoxResponsive({ label, imageLabel }: { label: string, imageLabel: boolean }) {
   const [open, setOpen] = React.useState(false)
   const isDesktop = useMediaQuery("(min-width: 900px)")
+  const { statuses, setStatuses } = React.useContext(FilterContext)
 
   if (isDesktop) {
     return (
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <div className="flex items-center justify-start w-[150px] colored-buttonGreen">
-          <SlidersHorizontal className="w-5 h-5 text-tertiary" /> 
+            <SlidersHorizontal className="w-5 h-5 text-tertiary" /> 
             <button
               className="ml-3  outline-none text-gray-400 cursor-pointer"
             >
-              {selectedStatus?.label || ''}
+              Filters
             </button>
           </div>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
-          <StatusList setOpen={setOpen} setSelectedStatus={setSelectedStatus} />
+          <StatusList setOpen={setOpen} statuses={statuses} setStatuses={setStatuses} />
         </PopoverContent>
       </Popover>
     )
@@ -74,12 +60,12 @@ export function ComboBoxResponsive({ selectedStatus, setSelectedStatus, imageLab
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button variant="outline" className="w-[150px] justify-start">
-          {selectedStatus ? <>{selectedStatus.label}</> : <>+ Set status</>}
+          + Set status
         </Button>
       </DrawerTrigger>
       <DrawerContent>
         <div className="mt-4 border-t">
-          <StatusList setOpen={setOpen} setSelectedStatus={setSelectedStatus} />
+          <StatusList setOpen={setOpen} statuses={statuses} setStatuses={setStatuses} />
         </div>
       </DrawerContent>
     </Drawer>
@@ -88,10 +74,12 @@ export function ComboBoxResponsive({ selectedStatus, setSelectedStatus, imageLab
 
 function StatusList({
   setOpen,
-  setSelectedStatus,
+  statuses,
+  setStatuses,
 }: {
   setOpen: (open: boolean) => void
-  setSelectedStatus: (status: Status | null) => void
+  statuses: Status[]
+  setStatuses: (statuses: Status[]) => void
 }) {
   return (
     <Command>
@@ -101,7 +89,6 @@ function StatusList({
         <CommandGroup>
           {statuses.map((status) => {
             const checkboxId = `checkbox-${status.value}`;
-            console.log(checkboxId)
             return (
               <label
                 key={status.value}
@@ -111,17 +98,19 @@ function StatusList({
                 <Checkbox
                   id={checkboxId}
                   className="!w-8 !h-8"
-                  // checked={checkboxId} 
-                  onCheckedChange={(checked) => {
-                    setSelectedStatus(status);
-                    console.log(`Checkbox ${status.value} was ${checked ? 'checked' : 'unchecked'}`);
+                  checked={status.checked}
+                  onCheckedChange={() => {
+                    setStatuses(
+                      statuses.map(s => 
+                        s.value === status.value 
+                          ? { ...s, checked: !s.checked }
+                          : s
+                      )
+                    );
                   }}
                 />
                 <CommandItem
                   key={status.value}
-                  onSelect={() => {
-                    setSelectedStatus(status);
-                  }}
                   className="flex-1 px-0 py-0 bg-transparent cursor-pointer"
                 >
                   <span className="text-base font-medium">{status.label}</span>
