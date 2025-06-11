@@ -88,7 +88,7 @@ const EventCard = ({ roomingLists }: { roomingLists: RoomingList[] }) => {
           <div className="flex flex-row items-center justify-center gap-4">
             <Button
               variant="default"
-              className="py-6 px-32"
+              className="py-6 px-8 md:px-32"
             >
               View bookings ({bookingCount})
             </Button>

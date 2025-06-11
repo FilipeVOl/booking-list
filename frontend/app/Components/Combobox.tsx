@@ -59,9 +59,14 @@ export function ComboBoxResponsive({ label, imageLabel }: { label: string, image
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline" className="w-[150px] justify-start">
-          + Set status
-        </Button>
+        <div className="w-full flex items-center justify-start md:w-[150px] colored-buttonGreen">
+            <SlidersHorizontal className="w-5 h-5 text-tertiary" /> 
+            <button
+              className="ml-3  outline-none text-gray-400 cursor-pointer"
+            >
+              Filters
+            </button>
+          </div>
       </DrawerTrigger>
       <DrawerContent>
         <div className="mt-4 border-t">

@@ -25,7 +25,13 @@ h1 {
 }
 
 h2 {
-  @apply text-3xl font-bold leading-15;
+  @apply text-xl font-bold;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    @apply text-3xl font-bold leading-15;
+  }
 }
 
 .colored-buttonPurple {
@@ -45,7 +51,14 @@ h2 {
 }
 
 .card {
-  @apply bg-white rounded-lg p-4 shadow-md min-w-[500px] border-gray-500/20 border;
+  @apply bg-white rounded-lg p-3 md:p-4 shadow-md border-gray-500/20 border;
+  min-width: 500px; /* Largura mínima para mobile */
+}
+
+@media (max-width: 768px) {
+  .card {
+    min-width: 280px; /* Largura mínima para tablets */
+  }
 }
 
 @layer base {
@@ -62,11 +75,19 @@ h2 {
   scrollbar-width: thin;              /* Firefox */
   scrollbar-color: #d1d5db #f3f4f6;   /* Firefox */
   position: relative;
+  padding-bottom: 16px; /* Adiciona espaço entre o conteúdo e a scrollbar */
+  -webkit-overflow-scrolling: touch; /* Melhor scroll em dispositivos touch */
 }
 
 .cards-container::-webkit-scrollbar {
-  height: 16px; /* Área total da barra */
+  height: 8px; /* Área total da barra - menor em mobile */
   background: transparent;
+}
+
+@media (min-width: 768px) {
+  .cards-container::-webkit-scrollbar {
+    height: 16px; /* Área total da barra - maior em desktop */
+  }
 }
 
 .cards-container::-webkit-scrollbar-track {
