@@ -12,7 +12,6 @@ export const useFetchData = (searchInput: string) => {
             params: { searchValue: searchInput }
         })
         const data = await response.data
-        console.log(data)
         }
         fetchData()
     }, 1000)

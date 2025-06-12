@@ -13,13 +13,12 @@ const HomePage = () => {
         const timeoutId = setTimeout(() => {
             const fetchData = async () => {
                 try {
-                    const response = await axios.get("http://localhost:3001/api/rooming-lists", {
+                    await axios.get("http://localhost:3001/api/rooming-lists", {
                         headers: {
                             'Authorization': `Bearer ${localStorage.getItem('token')}`
                         },
                         params: { searchValue: searchInput }
                     });
-                    console.log(response.data);
                 } catch (error) {
                     console.error('Error fetching data:', error);
                 }

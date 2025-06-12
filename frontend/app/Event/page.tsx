@@ -8,7 +8,6 @@ import { filterRoomingListsByEvent } from "../types/RoomingList";
 //     method: "GET",
 //   });
 //   const data = await response.json();
-//   console.log(data);
 //   return data;
 // })();
 
