@@ -7,7 +7,6 @@ import roomingBookings from "../../../backend/json/rooming-list-bookings.json";
 import { FilterContext } from "@/context/filterContext";
 import { useContext } from "react";
 import DialogBox from "../Components/DialogBox";
-import { User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const EventCard = ({ roomingLists }: { roomingLists: RoomingList[] }) => {
