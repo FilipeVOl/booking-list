@@ -19,7 +19,7 @@ export default function LoginPage() {
     setError('');
 
     try {
-      const response = await axios.post('https://booking-list-backend-eight.vercel.app/api/auth/login', {
+      const response = await axios.post('https://booking-list-production.up.railway.app/api/auth/login', {
         email,
         password,
       });
