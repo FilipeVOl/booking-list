@@ -5,7 +5,7 @@ export const useFetchData = (searchInput: string) => {
     useEffect(() => {
     setTimeout(() => {
     const fetchData = async () => {
-        const response = await axios.get("http://localhost:3001/api/rooming-lists", {
+        const response = await axios.get("https://booking-list-production.up.railway.app/api/rooming-lists", {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
