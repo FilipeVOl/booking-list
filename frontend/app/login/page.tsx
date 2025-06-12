@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useAuth } from '@/context/authContext';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { Button } from '@/components/ui/button';
 
 export default function LoginPage() {
@@ -35,8 +35,12 @@ export default function LoginPage() {
       setSuccess('Login realizado com sucesso');
 
       router.push('/');
-    } catch (err: any) {
-      setError(err.message || 'Ocorreu um erro ao fazer login');
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        setError(err.message || 'Ocorreu um erro ao fazer login');
+      } else {
+        setError('Ocorreu um erro inesperado');
+      }
     }
   };
 

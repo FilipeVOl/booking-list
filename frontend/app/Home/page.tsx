@@ -6,7 +6,6 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 
 const HomePage = () => {
-    const [selectedFilter, setSelectedFilter] = React.useState("");
     const [searchInput, setSearchInput] = React.useState("");
     const router = useRouter();
 
@@ -69,10 +68,7 @@ const HomePage = () => {
 
                     {/* Filter Component */}
                     <div className="w-full md:w-auto">
-                        <ComboBoxResponsive
-                            label="Filters"
-                            imageLabel={false}
-                        />
+                        <ComboBoxResponsive/>
                     </div>
                 </div>
             </div>

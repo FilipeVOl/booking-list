@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import { useMediaQuery } from "@/hooks/use-media-query"
-import { Button } from "@/components/ui/button"
 import {
   Command,
   CommandEmpty,
@@ -31,7 +30,7 @@ export type Status = {
   checked: boolean
 }
 
-export function ComboBoxResponsive({ label, imageLabel }: { label: string, imageLabel: boolean }) {
+export function ComboBoxResponsive() {
   const [open, setOpen] = React.useState(false)
   const isDesktop = useMediaQuery("(min-width: 900px)")
   const { statuses, setStatuses } = React.useContext(FilterContext)
@@ -78,7 +77,6 @@ export function ComboBoxResponsive({ label, imageLabel }: { label: string, image
 }
 
 function StatusList({
-  setOpen,
   statuses,
   setStatuses,
 }: {

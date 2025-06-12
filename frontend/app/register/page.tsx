@@ -3,9 +3,8 @@
 import { useState } from 'react';
 import { useAuth } from '@/context/authContext';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { Button } from '@/components/ui/button';
-import bcrypt from 'bcryptjs';
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -21,7 +20,8 @@ export default function RegisterPage() {
   const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let { name, value } = e.target;
+    let { value } = e.target;
+    const { name } = e.target;
     if (name === 'cpf') {
       value = value.replace(/\D/g, '');
       value = value.replace(/(\d{3})(\d)/, '$1.$2');
@@ -59,11 +59,15 @@ export default function RegisterPage() {
       login(response.data.user);
       setSuccess('Conta criada com sucesso');
       router.push('/login');
-    } catch (err: any) {
-      const backendError = err.response?.data;
-      setError(
-        backendError?.error || backendError?.message || 'Ocorreu um erro ao criar sua conta'
-      );
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        const backendError = err.response?.data;
+        setError(
+          backendError?.error || backendError?.message || 'Ocorreu um erro ao criar sua conta'
+        );
+      } else {
+        setError('Ocorreu um erro inesperado');
+      }
     }
   };
 

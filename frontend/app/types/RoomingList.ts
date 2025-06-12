@@ -12,7 +12,7 @@ export interface RoomingList {
 
 // Generic type para filtrar rooming lists por nome do evento
 export type FilterRoomingListByEvent<T extends string> = RoomingList & {
-    eventName: string; // deve conter T
+    eventName: T; // usando T ao invés de string
 };
 
 // Generic function para filtrar rooming lists
