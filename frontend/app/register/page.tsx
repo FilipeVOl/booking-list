@@ -44,7 +44,7 @@ export default function RegisterPage() {
     }
 
     try {
-      const response = await axios.post('http://localhost:3001/api/users/', {
+      const response = await axios.post('https://booking-list-backend-eight.vercel.app/api/users/', {
         name: formData.name,
         cpf: formData.cpf.replace(/\D/g, ''),
         email: formData.email,
