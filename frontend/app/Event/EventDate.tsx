@@ -47,6 +47,10 @@ const formatDateRange = (start: Date, end: Date) => {
   return `${startMonth} ${startDay} - ${endMonth} ${endDay}, ${year}`;
 }
 
+const formatPhoneNumber = (phoneNumber: string) => {
+  return phoneNumber.replace(/(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
+}
+
 const EventDate: React.FC<EventDateProps> = ({ month, day, label }) => {
   return (
     <div className="flex flex-col items-center">
@@ -62,4 +66,4 @@ const EventDate: React.FC<EventDateProps> = ({ month, day, label }) => {
   );
 };
 
-export { EventDate, getMonth, formatDateRange }; 
+export { EventDate, getMonth, formatDateRange, formatPhoneNumber }; 
