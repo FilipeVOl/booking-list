@@ -55,6 +55,16 @@ h2 {
   min-width: 500px; /* Largura mínima para mobile */
 }
 
+.dialog {
+  @apply h-[50vh] overflow-y-auto;
+}
+
+@media (max-width: 768px) {
+  .dialog {
+    @apply h-[50vh] overflow-y-auto;
+  }
+}
+
 @media (max-width: 768px) {
   .card {
     min-width: 280px; /* Largura mínima para tablets */

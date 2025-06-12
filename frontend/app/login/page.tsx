@@ -19,7 +19,7 @@ export default function LoginPage() {
     setError('');
 
     try {
-      const response = await axios.post('https://booking-list-production.up.railway.app/api/auth/login', {
+      const response = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/auth/login', {
         email,
         password,
       });

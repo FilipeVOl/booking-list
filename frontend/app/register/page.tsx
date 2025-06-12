@@ -44,7 +44,7 @@ export default function RegisterPage() {
     }
 
     try {
-      const response = await axios.post('https://booking-list-production.up.railway.app/api/users/', {
+      const response = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL + 'api/users/', {
         name: formData.name,
         cpf: formData.cpf.replace(/\D/g, ''),
         email: formData.email,
