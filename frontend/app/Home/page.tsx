@@ -13,7 +13,7 @@ const HomePage = () => {
         const timeoutId = setTimeout(() => {
             const fetchData = async () => {
                 try {
-                    await axios.get("http://localhost:3001/api/rooming-lists", {
+                    await axios.get(process.env.NEXT_PUBLIC_BACKEND_URL + "api/rooming-lists", {
                         headers: {
                             'Authorization': `Bearer ${localStorage.getItem('token')}`
                         },
